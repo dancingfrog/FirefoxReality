@@ -39,6 +39,7 @@ public class WidgetPlacement {
     public boolean showPointer = true;
     public boolean firstDraw = false;
     public boolean layer = true;
+    public float textureScale = 0.7f;
 
     public WidgetPlacement clone() {
         WidgetPlacement w = new WidgetPlacement();
@@ -67,6 +68,7 @@ public class WidgetPlacement {
         this.opaque = w.opaque;
         this.showPointer = w.showPointer;
         this.firstDraw = w.firstDraw;
+        this.textureScale = w.textureScale;
     }
 
     public int textureWidth() {

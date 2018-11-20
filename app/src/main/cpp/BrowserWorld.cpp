@@ -690,8 +690,8 @@ BrowserWorld::AddWidget(int32_t aHandle, const WidgetPlacementPtr& aPlacement) {
     worldWidth = aPlacement->width * kWorldDPIRatio;
   }
 
-  int32_t textureWidth = (int32_t)(ceilf(aPlacement->width * aPlacement->density));
-  int32_t textureHeight = (int32_t)(ceilf(aPlacement->height * aPlacement->density));
+  const int32_t textureWidth = aPlacement->GetTextureWidth();
+  const int32_t textureHeight = aPlacement->GetTextureHeight();
 
   WidgetPtr widget;
   VRLayerQuadPtr layer;
@@ -734,8 +734,7 @@ BrowserWorld::UpdateWidget(int32_t aHandle, const WidgetPlacementPtr& aPlacement
 
   widget->SetPlacement(aPlacement);
   widget->ToggleWidget(aPlacement->visible);
-  widget->SetSurfaceTextureSize((int32_t)(ceilf(aPlacement->width * aPlacement->density)),
-                                (int32_t)(ceilf(aPlacement->height * aPlacement->density)));
+  widget->SetSurfaceTextureSize(aPlacement->GetTextureWidth(), aPlacement->GetTextureHeight());
 
   float worldWidth = 0.0f, worldHeight = 0.0f;
   widget->GetWorldSize(worldWidth, worldHeight);

@@ -87,6 +87,7 @@ public class BrowserWidget extends UIWidget implements SessionStore.SessionChang
         aPlacement.anchorX = 0.5f;
         aPlacement.anchorY = 0.0f;
         aPlacement.visible = true;
+        aPlacement.textureScale = 1.0f;
     }
 
     @Override

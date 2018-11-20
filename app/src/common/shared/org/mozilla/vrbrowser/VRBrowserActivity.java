@@ -441,8 +441,10 @@ public class VRBrowserActivity extends PlatformActivity implements WidgetManager
             }
             widget.setSurfaceTexture(aTexture, aWidth, aHeight);
             // Add widget to a virtual display for invalidation
-            if (((View)widget).getParent() == null) {
-                mWidgetContainer.addView((View) widget, new FrameLayout.LayoutParams(aWidth, aHeight));
+            View view = (View) widget;
+            if (view.getParent() == null) {
+                float scale = widget.getPlacement().textureScale;
+                mWidgetContainer.addView(view, new FrameLayout.LayoutParams((int) Math.ceil(aWidth / scale), (int) Math.ceil(aHeight / scale)));
             }
         });
     }
@@ -473,7 +475,8 @@ public class VRBrowserActivity extends PlatformActivity implements WidgetManager
             View view = (View) widget;
             // Add widget to a virtual display for invalidation
             if (aSurface != null && view.getParent() == null) {
-                mWidgetContainer.addView(view, new FrameLayout.LayoutParams(aWidth, aHeight));
+                float scale = widget.getPlacement().textureScale;
+                mWidgetContainer.addView(view, new FrameLayout.LayoutParams((int) Math.ceil(aWidth / scale), (int) Math.ceil(aHeight / scale)));
             } else if (aSurface == null && view.getParent() != null) {
                 mWidgetContainer.removeView(view);
             }
@@ -486,13 +489,17 @@ public class VRBrowserActivity extends PlatformActivity implements WidgetManager
     void handleMotionEvent(final int aHandle, final int aDevice, final boolean aPressed, final float aX, final float aY) {
         runOnUiThread(() -> {
             Widget widget = mWidgets.get(aHandle);
+            float scale = widget != null ? widget.getPlacement().textureScale : 1.0f;
+            final float x = aX / scale;
+            final float y = aY / scale;
+
             if (widget == null) {
-                MotionEventGenerator.dispatch(mRootWidget, aDevice, aPressed, aX, aY);
+                MotionEventGenerator.dispatch(mRootWidget, aDevice, aPressed, x, y);
             } else if (widget == mBrowserWidget && mBrowserWidget.getBorderWidth() > 0) {
                 final int border = mBrowserWidget.getBorderWidth();
-                MotionEventGenerator.dispatch(widget, aDevice, aPressed, aX - border, aY - border);
+                MotionEventGenerator.dispatch(widget, aDevice, aPressed, x - border, y - border);
             } else {
-                MotionEventGenerator.dispatch(widget, aDevice, aPressed, aX, aY);
+                MotionEventGenerator.dispatch(widget, aDevice, aPressed, x, y);
             }
         });
     }
