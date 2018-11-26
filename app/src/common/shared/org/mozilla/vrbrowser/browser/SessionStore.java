@@ -991,6 +991,16 @@ public class SessionStore implements GeckoSession.NavigationDelegate, GeckoSessi
             String result = aUri;
             result += aUri.contains("?") ? "&" : "?";
             result += "disable_polymer=1";
+            if (uri.getQueryParameter("app") == null) {
+                result += "&app=desktop";
+            }
+            if (uri.getQueryParameter("persist_app") == null) {
+                result += "&persist_app=1";
+            }
+            if (uri.getQueryParameter("no_app") == null) {
+                result += "&no_app=1";
+            }
+
             return result;
         }
         catch (Exception ex) {
