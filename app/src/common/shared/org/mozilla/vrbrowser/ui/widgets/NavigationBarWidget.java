@@ -408,7 +408,7 @@ public class NavigationBarWidget extends UIWidget implements GeckoSession.Naviga
 
         // We need to add a delay for the exitFullScreen() call to solve some viewport scaling issues,
         // See https://github.com/MozillaReality/FirefoxReality/issues/833 for more info.
-        getHandler().postDelayed(() -> {
+        postDelayed(() -> {
             if (SessionStore.get().isInFullScreen()) {
                 SessionStore.get().exitFullScreen();
             }
@@ -705,7 +705,7 @@ public class NavigationBarWidget extends UIWidget implements GeckoSession.Naviga
             AtomicBoolean autoEnter = new AtomicBoolean(false);
             mAutoSelectedProjection = VideoProjectionMenuWidget.getAutomaticProjection(SessionStore.get().getUriFromSession(session), autoEnter);
             if (mAutoSelectedProjection != null && autoEnter.get()) {
-                getHandler().postDelayed(() -> enterVRVideo(mAutoSelectedProjection), 300);
+                postDelayed(() -> enterVRVideo(mAutoSelectedProjection), 300);
             }
         } else {
             if (mIsInVRVideo) {

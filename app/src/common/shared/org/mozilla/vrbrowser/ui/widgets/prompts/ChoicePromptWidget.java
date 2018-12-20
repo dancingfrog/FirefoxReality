@@ -82,7 +82,7 @@ public class ChoicePromptWidget extends UIWidget implements WidgetManagerDelegat
 
                 mAdapter.notifyDataSetChanged();
 
-                handler.postDelayed(new Runnable() {
+                postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         ChoiceWrapper selectedItem = mListItems[position];
